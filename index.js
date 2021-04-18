@@ -1,10 +1,8 @@
-// TODO: Include packages needed for this application
 const inquirer = require("inquirer");
 const fs = require("fs");
 const generateMarkdownUtil = require("./utils/generateMarkdown.js");
 const { generateMarkdown } = require("./utils/generateMarkdown.js");
 
-// TODO: Create an array of questions for user input
 const questions = [
   "What is the title of your project?",
   "Please write a brief description of your project: ",
@@ -17,7 +15,6 @@ const questions = [
   "Please enter your email address: ",
 ];
 
-// TODO: Create a function to write README file
 function writeToFile(fileName, data) {
   fs.writeFile(`./${fileName}`, data, (err) => {
     if (err) throw err;
@@ -25,7 +22,6 @@ function writeToFile(fileName, data) {
   });
 }
 
-// TODO: Create a function to initialize app
 function init() {
   inquirer
     .prompt([
@@ -60,8 +56,7 @@ function init() {
         name: "projectLicense",
         type: "list",
         message: questions[4],
-        choices: ["None", "MIT License", "GNU General Public License", "Apache License 2.0", "BSD 2-Clause 'Simplified' License", "BSD 3-Clause 'New' or 'Revised' License", "Boost Software License 1.0", "Creative Commons Zero v1.0 Universal", "Eclipse Public License 2.0", "GNU Affero General Public License v3.0", "GNU General Public License v2.0", "GNU Lesser General Public License v2.1", "Mozilla Public License 2.0", "The Unlicense"],
-        default: "MIT License"
+        choices: ["No License", "MIT License", "GNU General Public License", "ISC License", "Apache License 2.0", "BSD 2-Clause 'Simplified' License", "BSD 3-Clause 'New' or 'Revised' License", "Boost Software License 1.0", "Creative Commons Zero v1.0 Universal", "Eclipse Public License 2.0", "GNU Affero General Public License v3.0", "GNU General Public License v2.0", "GNU Lesser General Public License v2.1", "Mozilla Public License 2.0", "The Unlicense"],
       },
       {
         name: "projectContribute",
@@ -110,10 +105,8 @@ function init() {
       return generateMarkdown(data);
     })
     .then((markdownData => {
-      console.log(markdownData);
       writeToFile("README.md", markdownData);
     }));
 }
 
-// Function call to initialize app
 init();

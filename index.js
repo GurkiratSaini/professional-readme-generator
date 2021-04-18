@@ -19,7 +19,7 @@ const questions = [
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
-  fs.writeFile(`./${fileName}`, JSON.stringify(data, null, "\t"), (err) => {
+  fs.writeFile(`./${fileName}`, data, (err) => {
     if (err) throw err;
     console.log("Success!");
   });
@@ -30,50 +30,80 @@ function init() {
   inquirer
     .prompt([
       {
-        name: "project-title",
+        name: "projectTitle",
         type: "input",
         message: questions[0],
+        validate: (projectNameInput) => {
+          if (projectNameInput) {
+            return true;
+          }
+          console.log("Please enter the project name!");
+          return false;
+        }
       },
       {
-        name: "project-description",
+        name: "projectDescription",
         type: "input",
         message: questions[1],
       },
       {
-        name: "installation-instructions",
+        name: "installInstructions",
         type: "input",
         message: questions[2],
       },
       {
-        name: "project-usage",
+        name: "projectUsage",
         type: "input",
         message: questions[3],
       },
       {
-        name: "project-license",
+        name: "projectLicense",
         type: "list",
         message: questions[4],
-        choices: ["MIT", "Add more options pls"],
+        choices: ["None", "MIT License", "GNU General Public License", "Apache License 2.0", "BSD 2-Clause 'Simplified' License", "BSD 3-Clause 'New' or 'Revised' License", "Boost Software License 1.0", "Creative Commons Zero v1.0 Universal", "Eclipse Public License 2.0", "GNU Affero General Public License v3.0", "GNU General Public License v2.0", "GNU Lesser General Public License v2.1", "Mozilla Public License 2.0", "The Unlicense"],
+        default: "MIT License"
       },
       {
-        name: "project-contributing",
+        name: "projectContribute",
         type: "input",
         message: questions[5],
       },
       {
-        name: "project-tests",
+        name: "projectTests",
         type: "input",
         message: questions[6],
       },
       {
-        name: "github-username",
+        name: "githubUsername",
         type: "input",
         message: questions[7],
+        validate: (githubName) => {
+          if (githubName) {
+            return true;
+          } else {
+            console.log("Please enter your GitHub username!");
+            return false;
+          }
+        }
       },
       {
-        name: "email-address",
+        name: "emailAddress",
         type: "input",
         message: questions[8],
+        validate: (userEmail) => {
+          if (userEmail) {
+            return true;
+          } else {
+            console.log("Please enter your email address!")
+            return false;
+          }
+        }
+      },
+      {
+        name: "preferredMethodOfContact",
+        type: "list",
+        message: "What is your preferred method of contact?",
+        choices: ["Email", "Github"]
       },
     ])
     .then((data) => {

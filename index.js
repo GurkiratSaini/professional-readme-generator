@@ -1,12 +1,14 @@
 // TODO: Include packages needed for this application
 const inquirer = require("inquirer");
 const fs = require("fs");
+const generateMarkdownUtil = require("./utils/generateMarkdown.js");
+const { generateMarkdown } = require("./utils/generateMarkdown.js");
+
 // TODO: Create an array of questions for user input
 const questions = [
   "What is the title of your project?",
   "Please write a brief description of your project: ",
-  "Please enter the headings for a Table of Contents: ",
-  "Please enter the installation instructions: ",
+  "Please enter the installation instructions for your project: ",
   "Please enter the intended usage for your project: ",
   "Please select the correct license for your project",
   "Please enter contributing information for your project: ",
@@ -38,51 +40,49 @@ function init() {
         message: questions[1],
       },
       {
-        name: "project-content-table-headings",
+        name: "installation-instructions",
         type: "input",
         message: questions[2],
       },
       {
-        name: "installation-instructions",
-        type: "input",
-        mesage: questions[3],
-      },
-      {
         name: "project-usage",
         type: "input",
-        mesage: questions[4],
+        message: questions[3],
       },
       {
         name: "project-license",
         type: "list",
-        mesage: questions[5],
+        message: questions[4],
         choices: ["MIT", "Add more options pls"],
       },
       {
         name: "project-contributing",
         type: "input",
-        mesage: questions[6],
+        message: questions[5],
       },
       {
         name: "project-tests",
         type: "input",
-        mesage: questions[7],
+        message: questions[6],
       },
       {
         name: "github-username",
         type: "input",
-        mesage: questions[8],
+        message: questions[7],
       },
       {
         name: "email-address",
         type: "input",
-        mesage: questions[9],
+        message: questions[8],
       },
     ])
     .then((data) => {
-      console.log(data);
-      writeToFile("README.md", data);
-    });
+      return generateMarkdown(data);
+    })
+    .then((markdownData => {
+      console.log(markdownData);
+      writeToFile("README.md", markdownData);
+    }));
 }
 
 // Function call to initialize app

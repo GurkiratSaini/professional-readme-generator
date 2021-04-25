@@ -23,7 +23,7 @@ function writeToFile(fileName, data) {
 }
 
 function init() {
-  inquirer
+  return inquirer
     .prompt([
       {
         name: "projectTitle",
